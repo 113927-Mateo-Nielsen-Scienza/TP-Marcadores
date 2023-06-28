@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Iniciar sesión</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="logeoestilos.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Iniciar sesión</h1>
+    <form>
+      <div class="form-group" id="containerUser">
+        <label for="inputUsername">Usuario:</label>
+        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Ingresa tu nombre de usuario">
+      </div>
+      <div class="form-group" id="containerPassword">
+        <label for="inputPassword">Contraseña:</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Ingresa tu contraseña">
+      </div>
+      <div class="form-group">
+        <button type="button" id="enviar" class="btn btn-primary btn-block">Iniciar sesión</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+
+    document.addEventListener("click", function (event) {
+
+      if (event.target.id === "enviar") {
+        event.preventDefault();
+  
+        let Usuario = document.getElementById("inputUsername").value;
+        let password = document.getElementById("inputPassword").value;
+        let ban = true;
+  
+        if (Usuario === "") {
+          alert("Debe ingresar el nombre de usuario");
+          ban = false;
+        }
+        if (password === "") {
+          alert("Debe ingresar la contraseña del usuario");
+          ban = false;
+        }
+  
+        if (ban) {
+          const data = {
+            nombreUsuario: Usuario,
+            password: password,
+          };
+  
+          PostLogin(data);
+        }
+      }
+    });
+  
+    async function PostLogin(data) {
+      const url = "https://localhost:7026/Login";
+  
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+  
+        if (response.ok) {
+          window.location.href = "index.html";
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  </script>
+  
+
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
